@@ -1,1 +1,1 @@
-# catalogue-app
+# catalogue_app
