@@ -1,4 +1,5 @@
 # catalogue_app
+# catalogue_app
 # 📦 Catalogue App - Application de Gestion de Catalogue Personnel
 
 Une application Flutter moderne et élégante pour gérer votre catalogue de produits personnel avec authentification utilisateur, upload d'images, recherche et tri avancés.
@@ -305,19 +306,12 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 **Yosr Mekki**
 - Email: yosr.mekki@esprit.tn
-- GitHub: [@VOTRE_USERNAME](https://github.com/VOTRE_USERNAME)
+- GitHub: [@Yosr_Mekki](https://github.com/YosrMekkii)
 
 ## 📄 Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## 🙏 Remerciements
-
-- Flutter Team pour le framework incroyable
-- Hive pour la base de données locale simple et rapide
-- La communauté Flutter pour les ressources et le support
-
----
 
 **Note** : Ce projet a été développé dans le cadre d'un apprentissage de Flutter et du développement mobile/web.
 
@@ -334,6 +328,3 @@ Pour toute question ou suggestion, n'hésitez pas à ouvrir une issue sur GitHub
 ### Profil utilisateur
 ![Profil](screenshots/profile.png)
 
----
-
-**Fait avec ❤️ et Flutter**
