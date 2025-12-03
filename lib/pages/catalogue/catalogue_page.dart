@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
+import 'package:image_picker/image_picker.dart';
 import '../../models/product.dart';
 import '../../services/auth_service.dart';
 import '../../services/catalogue_service.dart';
 import '../auth/signin_page.dart';
-import '../profile/profile_page.dart'; 
+import '../profile/profile_page.dart';
 
 class CataloguePage extends StatefulWidget {
   @override
@@ -461,6 +462,7 @@ class ProductDialog extends StatefulWidget {
 
 class _ProductDialogState extends State<ProductDialog> {
   final _formKey = GlobalKey<FormState>();
+  final _imagePicker = ImagePicker();
   late TextEditingController _titreController;
   late TextEditingController _descriptionController;
   late TextEditingController _prixController;
@@ -476,21 +478,23 @@ class _ProductDialogState extends State<ProductDialog> {
   }
 
   Future<void> _pickImage() async {
-    final input = html.FileUploadInputElement()..accept = 'image/*';
-    input.click();
-
-    input.onChange.listen((e) async {
-      final files = input.files;
-      if (files!.isEmpty) return;
-
-      final reader = html.FileReader();
-      reader.readAsDataUrl(files[0]);
-      reader.onLoadEnd.listen((e) {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 800,
+        maxHeight: 800,
+        imageQuality: 85,
+      );
+      
+      if (image != null) {
+        final Uint8List bytes = await image.readAsBytes();
         setState(() {
-          _imageBase64 = reader.result.toString().split(',')[1];
+          _imageBase64 = base64Encode(bytes);
         });
-      });
-    });
+      }
+    } catch (e) {
+      print('Erreur lors de la sélection de l\'image: $e');
+    }
   }
 
   @override
