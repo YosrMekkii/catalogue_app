@@ -5,6 +5,7 @@ import '../../models/product.dart';
 import '../../services/auth_service.dart';
 import '../../services/catalogue_service.dart';
 import '../auth/signin_page.dart';
+import '../profile/profile_page.dart'; 
 
 class CataloguePage extends StatefulWidget {
   @override
@@ -125,15 +126,31 @@ class _CataloguePageState extends State<CataloguePage> {
         backgroundColor: Color(0xFF7986CB),
         elevation: 0,
         leading: currentUser.photoProfil != null
-            ? Padding(
-                padding: EdgeInsets.all(8),
-                child: CircleAvatar(
-                  backgroundImage: MemoryImage(
-                    base64Decode(currentUser.photoProfil!),
+            ? GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  ).then((_) => setState(() {}));
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: CircleAvatar(
+                    backgroundImage: MemoryImage(
+                      base64Decode(currentUser.photoProfil!),
+                    ),
                   ),
                 ),
               )
-            : null,
+            : IconButton(
+                icon: Icon(Icons.account_circle, color: Colors.white, size: 32),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  ).then((_) => setState(() {}));
+                },
+              ),
         actions: [
           IconButton(
             icon: Icon(Icons.logout_rounded, color: Colors.white),
@@ -391,24 +408,39 @@ class _CataloguePageState extends State<CataloguePage> {
     final isSelected = _sortBy == value;
     return Padding(
       padding: EdgeInsets.only(right: 8),
-      child: FilterChip(
-        label: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Color(0xFF5C6BC0) : Color(0xFF7986CB),
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-          ),
-        ),
-        selected: isSelected,
-        onSelected: (selected) => setState(() => _sortBy = value),
-        backgroundColor: Colors.white,
-        selectedColor: Color(0xFFE8EAF6),
-        checkmarkColor: Color(0xFF5C6BC0),
-        shape: RoundedRectangleBorder(
+      child: AnimatedScale(
+        scale: isSelected ? 1.05 : 1.0,
+        duration: Duration(milliseconds: 200),
+        child: InkWell(
+          onTap: () => setState(() => _sortBy = value),
           borderRadius: BorderRadius.circular(20),
-          side: BorderSide(
-            color: isSelected ? Color(0xFF7986CB) : Colors.white,
-            width: isSelected ? 2 : 1,
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: isSelected ? Color(0xFF7986CB) : Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.3),
+                width: 1,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (isSelected) ...[
+                  Icon(Icons.check, color: Colors.white, size: 16),
+                  SizedBox(width: 6),
+                ],
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
