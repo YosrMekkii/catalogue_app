@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
+import 'package:image_picker/image_picker.dart';
 import '../../models/user.dart';
 import '../../services/auth_service.dart';
 
@@ -12,6 +13,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final _authService = AuthService();
+  final _imagePicker = ImagePicker();
   
   late TextEditingController _nomController;
   late TextEditingController _prenomController;
@@ -52,21 +54,23 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _pickProfilePhoto() async {
-    final input = html.FileUploadInputElement()..accept = 'image/*';
-    input.click();
-
-    input.onChange.listen((e) async {
-      final files = input.files;
-      if (files!.isEmpty) return;
-
-      final reader = html.FileReader();
-      reader.readAsDataUrl(files[0]);
-      reader.onLoadEnd.listen((e) {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 512,
+        maxHeight: 512,
+        imageQuality: 85,
+      );
+      
+      if (image != null) {
+        final Uint8List bytes = await image.readAsBytes();
         setState(() {
-          _photoProfilBase64 = reader.result.toString().split(',')[1];
+          _photoProfilBase64 = base64Encode(bytes);
         });
-      });
-    });
+      }
+    } catch (e) {
+      print('Erreur lors de la sélection de l\'image: $e');
+    }
   }
 
   void _saveProfile() async {
