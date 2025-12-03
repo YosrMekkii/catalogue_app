@@ -306,7 +306,7 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 **Yosr Mekki**
 - Email: yosr.mekki@esprit.tn
-- GitHub: [@VOTRE_USERNAME](https://github.com/VOTRE_USERNAME)
+- GitHub: [@Yosr_Mekki](https://github.com/YosrMekkii)
 
 ## 📄 Licence
 
@@ -328,6 +328,4 @@ Pour toute question ou suggestion, n'hésitez pas à ouvrir une issue sur GitHub
 ### Profil utilisateur
 ![Profil](screenshots/profile.png)
 
----
 
-**Fait avec ❤️ et Flutter**
